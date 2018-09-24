@@ -17,8 +17,10 @@ TIT_FOR_TAT = "tft"
 ANTI_TIT_FOR_TAT = "anti_tft"
 RANDOM = "rand"
 
+
 def first_round(round_nr):
     return round_nr == 0
+
 
 class Agent:
 
@@ -37,7 +39,7 @@ class Agent:
     def update_payoff(self, payoff):
         self.payoff += payoff
         self.payoff_history.append(self.payoff)
-    
+
     def update_history(self):
         self.last_move = self.history[-1]
 
@@ -75,9 +77,10 @@ class Agent:
             play = DEFECT
 
         self.history.append(play)
-    
+
     def has_played(self):
         return len(self.history) > 0
+
 
 class IteratedPD:
     def __init__(self, nr_games):
@@ -113,12 +116,13 @@ class IteratedPD:
             self.agent_B.play(self.agent_A, round_nr)
             self.update_last_moves()
             self.update_payoffs()
-        
+
         print("Agent A has scored:", self.agent_A.history)
         print("Agent A's payoff:", self.agent_A.payoff_history)
         print("Agent B has scored:", self.agent_B.history)
         print("Agent B's payoff:", self.agent_B.payoff_history)
-    
+
+
 game = IteratedPD(3)
 game.run()
 print(game)
