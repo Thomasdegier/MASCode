@@ -90,7 +90,6 @@ class IteratedPD:
         self.agent_A.update_history()
         self.agent_B.update_history()
 
-
     def update_payoffs(self):
         agent_A_move = self.agent_A.last_move
         agent_B_move = self.agent_B.last_move
