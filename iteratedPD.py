@@ -51,10 +51,10 @@ class Agent:
 
     def play_rand(self, opponent, round_nr):
         prob = random.uniform(0, 1)
-        play = -1
+        play = DEFECT
 
         if prob > 0.5:
-            play = 1
+            play = COOPERATE
 
         self.history.append(play)
 
@@ -69,7 +69,7 @@ class Agent:
     def play_anti_tft(self, opponent, round_nr):
         play = 0
 
-        if not first_round(round_nr) and opponent.last_move == -1:
+        if not first_round(round_nr) and opponent.last_move == DEFECT:
             play = COOPERATE
         else:
             play = DEFECT
