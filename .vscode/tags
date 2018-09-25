@@ -1,0 +1,40 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+iteratedPD.py	../iteratedPD.py	1;"	kind:file	line:1
+random	../iteratedPD.py	/^import random$/;"	kind:namespace	line:1
+INIT_PAYOFF	../iteratedPD.py	/^INIT_PAYOFF = 1000$/;"	kind:variable	line:3
+PAYOFF_REWARD_VALUE	../iteratedPD.py	/^PAYOFF_REWARD_VALUE = 400$/;"	kind:variable	line:6
+PAYOFF_SUCKER_VALUE	../iteratedPD.py	/^PAYOFF_SUCKER_VALUE = - 500$/;"	kind:variable	line:7
+PAYOFF_TEMPTATION_VALUE	../iteratedPD.py	/^PAYOFF_TEMPTATION_VALUE = 600$/;"	kind:variable	line:8
+PAYOFF_PUNISHMENT_VALUE	../iteratedPD.py	/^PAYOFF_PUNISHMENT_VALUE = - 300$/;"	kind:variable	line:9
+COOPERATE	../iteratedPD.py	/^COOPERATE = 1$/;"	kind:variable	line:12
+DEFECT	../iteratedPD.py	/^DEFECT = -1$/;"	kind:variable	line:13
+TIT_FOR_TAT	../iteratedPD.py	/^TIT_FOR_TAT = "tft"$/;"	kind:variable	line:16
+N_GAMES_STRAT	../iteratedPD.py	/^N_GAMES_STRAT = "n_games"$/;"	kind:variable	line:17
+JEALOUS_MAN	../iteratedPD.py	/^JEALOUS_MAN = "jealous_man"$/;"	kind:variable	line:18
+ANTI_TIT_FOR_TAT	../iteratedPD.py	/^ANTI_TIT_FOR_TAT = "anti_tft"$/;"	kind:variable	line:19
+RANDOM	../iteratedPD.py	/^RANDOM = "rand"$/;"	kind:variable	line:20
+first_round	../iteratedPD.py	/^def first_round(round_nr):$/;"	kind:function	line:23
+Agent	../iteratedPD.py	/^class Agent:$/;"	kind:class	line:27
+__init__	../iteratedPD.py	/^    def __init__(self, name: str, experiment, strategy: str, stochastic: bool = False) -> None:$/;"	kind:member	line:28
+play	../iteratedPD.py	/^    def play(self, opponent, round_nr: int):$/;"	kind:member	line:38
+update_payoff	../iteratedPD.py	/^    def update_payoff(self, payoff: int) -> None:$/;"	kind:member	line:41
+update_history	../iteratedPD.py	/^    def update_history(self):$/;"	kind:member	line:45
+play_strategy	../iteratedPD.py	/^    def play_strategy(self, opponent, round_nr: int):$/;"	kind:member	line:48
+play_rand	../iteratedPD.py	/^    def play_rand(self, opponent, round_nr: int):$/;"	kind:member	line:58
+play_tft	../iteratedPD.py	/^    def play_tft(self, opponent, round_nr: int):$/;"	kind:member	line:67
+play_anti_tft	../iteratedPD.py	/^    def play_anti_tft(self, opponent, round_nr):$/;"	kind:member	line:75
+play_n_games_strat	../iteratedPD.py	/^    def play_n_games_strat(self, opponent, round_nr: int):$/;"	kind:member	line:85
+make_decision	../iteratedPD.py	/^    def make_decision(self, play):$/;"	kind:member	line:94
+play_jealous_man	../iteratedPD.py	/^    def play_jealous_man(self, opponent, round_nr: int):$/;"	kind:member	line:102
+has_played	../iteratedPD.py	/^    def has_played(self):$/;"	kind:member	line:110
+IteratedPD	../iteratedPD.py	/^class IteratedPD:$/;"	kind:class	line:114
+__init__	../iteratedPD.py	/^    def __init__(self, nr_games: int)-> None:$/;"	kind:member	line:115
+update_last_moves	../iteratedPD.py	/^    def update_last_moves(self):$/;"	kind:member	line:121
+update_payoffs	../iteratedPD.py	/^    def update_payoffs(self):$/;"	kind:member	line:125
+run	../iteratedPD.py	/^    def run(self):$/;"	kind:member	line:142
+game	../iteratedPD.py	/^game = IteratedPD(3)$/;"	kind:variable	line:155
