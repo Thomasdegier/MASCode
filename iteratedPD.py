@@ -96,23 +96,14 @@ class Agent:
 
         self.make_decision(play)
 
-    # def play_jealous_man(self, opponent, round_nr: int):
-    #     play: int = COOPERATE
-
-    #     opponent_last_action = self.check_opponents_action(opponent)
-
-    #     if opponent.payoff > self.payoff or first_round(round_nr):
-    #         play = DEFECT
-
-    #     self.make_decision(play)
-
     def play_win_stay_lose_switch(self, opponent, round_nr):
-        rand_prob: float = DEFECT if random.uniform(0,1) > 0.5 else COOPERATE
+        rand_prob: float = DEFECT if random.uniform(0, 1) > 0.5 else COOPERATE
         play: int = rand_prob
 
         if not first_round(round_nr):
             # Play if last move resulted in increase in payoff, else switch strategy
-            play = self.last_move if self.payoff_history[-1] - self.payoff_history[-2] > 0 else -1 * self.last_move
+            play = self.last_move if self.payoff_history[-1] - \
+                self.payoff_history[-2] > 0 else -1 * self.last_move
 
         self.make_decision(play)
 
@@ -128,20 +119,21 @@ class Agent:
         noise_prob = random.uniform(0, 1)
 
         # If we can't determine the opponent's last move due to noise
-        if self.experiment.p_noisy > 0 and self.experiment.p_noisy < noise_prob: 
+        if self.experiment.p_noisy > 0 and self.experiment.p_noisy < noise_prob:
             guess_prob = random.uniform(0, 1)
             return DEFECT if guess_prob > 0.5 else COOPERATE
-        
-        return opponent.last_move
 
+        return opponent.last_move
+ 
     def has_played(self):
         return len(self.history) > 0
 
+
 class IteratedPD:
-    def __init__(self, nr_games: int, p_noisy: float = 0)-> None:
+    def __init__(self, nr_games: int, p_noisy: float = 0, strategy_A=TIT_FOR_TAT, strategy_B=WIN_STAY_LOSE_SWITCH)-> None:
         self.nr_games = nr_games
-        self.agent_A: Agent = Agent("Alice", self, TIT_FOR_TAT)
-        self.agent_B: Agent = Agent("Bob", self, RANDOM)
+        self.agent_A: Agent = Agent("Alice", self, strategy_A)
+        self.agent_B: Agent = Agent("Bob", self, strategy_B)
         self.history: list = []
         self.p_noisy = p_noisy
 
@@ -166,17 +158,24 @@ class IteratedPD:
             self.agent_A.update_payoff(PAYOFF_PUNISHMENT_VALUE)
             self.agent_B.update_payoff(PAYOFF_PUNISHMENT_VALUE)
 
+    def printResults(self):
+        agents = [self.agent_A, self.agent_B]
+
+        for agent in agents:
+            print("Agent {} uses strategy: {}".format(agent.name, agent.strategy))
+            print("Agent {} has scored: {}".format(agent.name, agent.history))
+            print("Agent {}'s payoff: {}".format(agent.name, agent.payoff_history))
+            print("\n")
+    
     def run(self):
         for round_nr in range(self.nr_games):
             self.agent_A.play(self.agent_B, round_nr)
             self.agent_B.play(self.agent_A, round_nr)
             self.update_last_moves()
             self.update_payoffs()
+        
+        self.printResults()
 
-        print("Agent A has scored:", self.agent_A.history)
-        print("Agent A's payoff:", self.agent_A.payoff_history)
-        print("Agent B has scored:", self.agent_B.history)
-        print("Agent B's payoff:", self.agent_B.payoff_history)
 
-game = IteratedPD(4)
+game = IteratedPD(20, strategy_A=TIT_FOR_TAT, strategy_B=RANDOM)
 game.run()
