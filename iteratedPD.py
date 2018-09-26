@@ -1,6 +1,7 @@
 import random
+import copy
 
-INIT_PAYOFF = 1000
+INIT_PAYOFF = 0
 
 # PAYOFF constants: where 2R > T + S
 PAYOFF_REWARD_VALUE = 400
@@ -14,16 +15,18 @@ DEFECT = -1
 
 # STRATEGIES
 TIT_FOR_TAT = "tft"
+TIT_FOR_TWO_TATS = "tftt"
 N_GAMES_STRAT = "n_games"
 JEALOUS_MAN = "jealous_man"
-ANTI_TIT_FOR_TAT = "anti_tft"
+DEFECT_STR = "defect_str"
+COOP_STR = "coop_str"
 RANDOM = "rand"
+ANTI_TIT_FOR_TAT = "anti_tft"
 WIN_STAY_LOSE_SWITCH = "win_stay_lose_switch"
 
 
 def first_round(round_nr):
     return round_nr == 0
-
 
 class Agent:
     def __init__(self, name: str, experiment, strategy: str, stochastic: bool = False, p_error: float = 0) -> None:
@@ -34,6 +37,7 @@ class Agent:
         self.strategy: str = strategy
         self.last_move: int = 0
         self.history: list = []
+        self.public_history: list = []
         self.payoff_history: list = [INIT_PAYOFF]
         self.payoff: int = INIT_PAYOFF
 
@@ -46,6 +50,7 @@ class Agent:
 
     def update_history(self):
         self.last_move = self.history[-1]
+        self.public_history = copy.deepcopy(self.history)
 
     def play_strategy(self, opponent, round_nr: int):
         if self.strategy == TIT_FOR_TAT:
@@ -58,6 +63,12 @@ class Agent:
         #     self.play_jealous_man(opponent, round_nr)
         elif self.strategy == WIN_STAY_LOSE_SWITCH:
             self.play_win_stay_lose_switch(opponent, round_nr)
+        elif self.strategy == TIT_FOR_TWO_TATS:
+            self.play_tftt(opponent, round_nr)
+        elif self.strategy == DEFECT_STR:
+            self.play_defect(opponent, round_nr)
+        elif self.strategy == COOP_STR:
+            self.play_coop(opponent, round_nr)
 
     def play_rand(self, opponent, round_nr: int):
         prob: float = random.uniform(0, 1)
@@ -75,6 +86,26 @@ class Agent:
             play = self.check_opponents_last_action(opponent)
 
         self.make_decision(play)
+
+    def play_defect(self, opponent, round_nr):
+        self.make_decision(DEFECT)
+
+    def play_coop(self, opponent, round_nr):
+        self.make_decision(COOPERATE)
+
+    def play_tftt(self, opponent, round_nr: int):
+        play = COOPERATE
+
+        if len(opponent.public_history) > 1:
+            play = self.tftt_check_opponents_last_two_actions(opponent)
+
+        self.make_decision(play)
+
+    def tftt_check_opponents_last_two_actions(self, opponent: 'Agent'):
+        if COOPERATE in opponent.public_history[-2:]:
+            return COOPERATE
+
+        return DEFECT
 
     def play_anti_tft(self, opponent, round_nr):
         play = 0
@@ -119,12 +150,12 @@ class Agent:
         noise_prob = random.uniform(0, 1)
 
         # If we can't determine the opponent's last move due to noise
-        if self.experiment.p_noisy > 0 and self.experiment.p_noisy < noise_prob:
+        if self.experiment.p_noisy > 0 and self.experiment.p_noisy > noise_prob:
             guess_prob = random.uniform(0, 1)
             return DEFECT if guess_prob > 0.5 else COOPERATE
 
         return opponent.last_move
- 
+
     def has_played(self):
         return len(self.history) > 0
 
@@ -162,20 +193,33 @@ class IteratedPD:
         agents = [self.agent_A, self.agent_B]
 
         for agent in agents:
-            print("Agent {} uses strategy: {}".format(agent.name, agent.strategy))
+            print("Agent {} uses strategy: {}".format(
+                agent.name, agent.strategy))
             print("Agent {} has scored: {}".format(agent.name, agent.history))
-            print("Agent {}'s payoff: {}".format(agent.name, agent.payoff_history))
+            print("Agent {}'s payoff: {}".format(
+                agent.name, agent.payoff_history))
             print("\n")
-    
+
+    def getWinner(self):
+        if self.agent_A.payoff > self.agent_A.payoff:
+            return self.agent_A.strategy
+        else:
+            return self.agent_B.strategy
+
     def run(self):
         for round_nr in range(self.nr_games):
             self.agent_A.play(self.agent_B, round_nr)
             self.agent_B.play(self.agent_A, round_nr)
             self.update_last_moves()
             self.update_payoffs()
-        
+
         self.printResults()
+        print("Winner is: {}".format(self.getWinner()))
+        return self.getWinner()
 
+winner = []
+for i in range(1, 100):
+    game = IteratedPD(20, p_noisy=1, strategy_A=TIT_FOR_TAT, strategy_B=ANTI_TIT_FOR_TAT)
+    winner.append(game.run())
 
-game = IteratedPD(20, strategy_A=TIT_FOR_TAT, strategy_B=RANDOM)
-game.run()
+print(winner)
