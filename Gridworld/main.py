@@ -1,7 +1,7 @@
-from Gridworld import GridWorld
+from OptimalGridworld import OptimalGridWorld
 
 def main():
-    gridworld = GridWorld()
+    gridworld = OptimalGridWorld()
     gridworld.run()
 
 if __name__ == '__main__':
