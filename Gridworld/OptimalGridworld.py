@@ -35,18 +35,50 @@ class OptimalGridWorld:
 
         return False
 
-    def getValueForState(self, state_tuple):
-        initial_value = 0
+    def improvePolicy(self):
+        policy_stable = True
+        
+        for row_index, row in enumerate(self.grid):
+            for col_index, column in enumerate(row):
+                state_tuple = (col_index, row_index)
+                actions = self.getActionValuesForState(state_tuple)
+                chosen_action = np.argmax(self.policies[state_tuple])
+                best_action = np.argmax(actions)
+
+                if chosen_action != best_action:
+                    policy_stable = False
+
+                self.setOptimalPolicy(state_tuple, best_action)
+
+        if policy_stable:
+            return
+
+        self.evaluatePolicy(1)
+
+    def setOptimalPolicy(self, state_tuple, best_action):
+        self.policies[state_tuple] = [0 for i in self.policies[state_tuple]]
+        self.policies[state_tuple][best_action] = 1
+
+    def getActionValuesForState(self, state_tuple):
         qa_values = []
 
         for index, action in enumerate(DIRECTIONS):
             next_state_tuple = self.getNextState(state_tuple, action)
             expected_reward = self.getExpectedReward(
                 state_tuple, next_state_tuple)
-            qa_values.append(self.getPolicy(state_tuple, index) * (expected_reward + (
-                GAMMA * self.getValueForNextState(state_tuple, next_state_tuple))))
+            qa_values.append(expected_reward + (
+                GAMMA * self.getValueForNextState(state_tuple, next_state_tuple)))
 
-        self.grid.transpose()[state_tuple] = max(qa_values)
+        return qa_values
+    
+    def getValueForState(self, state_tuple):
+        initial_value = 0
+        possible_actions = self.getActionValuesForState(state_tuple)
+        
+        for index, action in enumerate(possible_actions):
+            initial_value += self.getPolicy(state_tuple, index) * action
+
+        self.grid.transpose()[state_tuple] = max(possible_actions)
 
     def getPolicy(self, state_tuple, action_index):
         x, y = state_tuple
@@ -85,9 +117,12 @@ class OptimalGridWorld:
                 coordinates = (col_index, row_index)
                 self.getValueForState(coordinates)
 
+    def evaluatePolicy(self, max_k):
+        for i in range(max_k):
+            self.traverseGrid()
 
     def run(self):
-        for i in range(100):
-            self.traverseGrid()
+        self.evaluatePolicy(100)
+            # self.improvePolicy()
 
         print(self.grid)
