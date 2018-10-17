@@ -4,7 +4,7 @@ from Gridworld import GridWorld
 def main():
     # gridworldOg = GridWorld()
     # gridworldOg.run()
-    gridworld = OptimalGridWorld()
+    gridworld = GridWorld()
     gridworld.run()
 
 if __name__ == '__main__':

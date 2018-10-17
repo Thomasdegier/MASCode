@@ -7,7 +7,7 @@ LOCATION_B = (3, 0)
 LOCATION_B_PRIME = (3, 2)
 
 INIT_POLICY_P = 0.25
-GAMMA = 0.9
+GAMMA = 1
 
 TRANS_A_REWARD = 10
 TRANS_B_REWARD = 5
@@ -19,7 +19,7 @@ DIRECTIONS = [(0, 1), (1, 0), (0, -1), (-1, 0)]
 UP, RIGHT, DOWN, LEFT = DIRECTIONS
 
 
-class GridWorld:
+class EpisodicGridWorld:
     def __init__(self, dim_x=5, dim_y=5):
         self.grid = np.zeros((dim_x, dim_y))
         self.policies = np.full((dim_x, dim_y, NR_ACTIONS), INIT_POLICY_P)
@@ -59,18 +59,21 @@ class GridWorld:
 
     def getNextState(self, state_tuple: tuple, action: tuple):
         if state_tuple == LOCATION_A:
-            return LOCATION_A_PRIME
+            return LOCATION_A
 
         if state_tuple == LOCATION_B:
-            return LOCATION_B_PRIME
+            return LOCATION_B
 
         return tuple(map(add, action, state_tuple))
 
     def getExpectedReward(self, current_state_tuples: tuple, next_state_tuple: tuple):
-        if current_state_tuples == LOCATION_A:
+        if current_state_tuples == LOCATION_A or current_state_tuples == LOCATION_B:
+            return 0
+
+        if next_state_tuple == LOCATION_A:
             return TRANS_A_REWARD
 
-        if current_state_tuples == LOCATION_B:
+        if next_state_tuple == LOCATION_B:
             return TRANS_B_REWARD
 
         if self.isOutOfBounds(next_state_tuple):
@@ -89,3 +92,6 @@ class GridWorld:
             self.traverseGrid()
 
         print(self.grid)
+
+gw = EpisodicGridWorld()
+gw.run()
