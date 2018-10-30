@@ -126,3 +126,6 @@ class OptimalGridWorld:
             # self.improvePolicy()
 
         print(self.grid)
+
+gw = OptimalGridWorld()
+gw.run()
