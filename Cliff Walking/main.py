@@ -2,13 +2,18 @@ from GridEnvironment import GridEnvironment
 from CliffEnvironment import CliffEnvironment
 from QLearnerAgent import QLearnerAgent
 
-# TODO: Set to 10 later
-NR_COLUMNS = 5
+########################################################
+# Gridworld
+########################################################
 
-# Including the cliff
-NR_ROWS = 4
+cliffWorld = CliffEnvironment(10, 4)
+agentC = QLearnerAgent(cliffWorld, 100, 0.2, (0, 3))
 
-cliffWorld = CliffEnvironment(NR_COLUMNS, NR_ROWS)
-agent = QLearnerAgent(cliffWorld, 100, 0.2, (0, NR_ROWS - 1))
+########################################################
+# ClifWorld
+########################################################
 
-agent.run()
+gridWorld = GridEnvironment(8, 8)
+agentG = QLearnerAgent(gridWorld, 100, 0.2, (0, 0))
+gridWorld.world
+print("Dog")
