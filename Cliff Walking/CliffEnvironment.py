@@ -14,7 +14,13 @@ ACTION_DIRECTIONS = [(0, 1), (1, 0), (0, -1), (-1, 0)]
 
 
 class CliffEnvironment(Environment):
-
+    """
+        Environment, where position coordinates correspond to (x, y).
+        [(0,0), (1,0), (2,0), (3,0)]
+        [(0,1), (1,1), (2,1), (3,1)]
+        [(0,2), (1,2), (2,2), (3,2)]
+        [(0,3), (1,3), (2,3), (3,3)]
+    """
     def __init__(self, nr_columns, nr_rows, nr_actions=4, init_qa_values=0):
         super().__init__(nr_columns, nr_rows)
         self.init_world_rewards()
