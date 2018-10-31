@@ -10,7 +10,7 @@ class Agent:
         self.curr_state = init_position
         self.env = env
         self.epsilon = epsilon
-        self.q_table = np.zeros((env.nr_columns, env.nr_rows + 1, env.nr_actions))
+        self.q_table = np.zeros((env.nr_columns, env.nr_rows, env.nr_actions))
         
     def run(self):
         pass

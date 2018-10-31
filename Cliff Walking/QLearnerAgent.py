@@ -29,4 +29,4 @@ class QLearnerAgent(Agent):
     def update_q_table(self, action_index, next_state, next_best_action_index):
         curr_q = self.q_table[self.curr_state][action_index]
         update = (self.get_reward_for_state(next_state) + GAMMA * self.q_table[next_state][next_best_action_index] - curr_q)
-        self.q_table[self.curr_state][action_index] = curr_q + ALPHA * update
+        self.q_table.transpose()[self.curr_state][action_index] = curr_q + ALPHA * update
