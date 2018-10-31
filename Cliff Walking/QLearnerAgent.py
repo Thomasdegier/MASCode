@@ -26,15 +26,14 @@ class QLearnerAgent(Agent):
             while not self.terminated():
                 action_index = self.get_next_action()
                 next_state = self.get_next_state(action_index)
-                next_state_best_action_index = np.argmax(self.q_table[next_state])
+                next_state_best_action_index = np.argmax(self.q_table[swap_tuple(next_state)])
 
                 self.update_q_table(action_index, next_state, next_state_best_action_index)
                 self.update_state(next_state)
                 
     def update_q_table(self, action_index, next_state, next_best_action_index):
         """ Updates the Q-table according to the Q-Learning Bellman's equation. """
-        curr_q = self.q_table[self.curr_state][action_index]
-        update = (self.get_reward_for_state(next_state) + GAMMA * self.q_table[next_state][next_best_action_index] - curr_q)
+        curr_q = self.q_table[swap_tuple(self.curr_state)][action_index]
+        update = (self.get_reward_for_state(next_state) + GAMMA * self.q_table[swap_tuple(next_state)][next_best_action_index] - curr_q)
 
-        # Ensure we access the right entries
         self.q_table[swap_tuple(self.curr_state)][action_index] = curr_q + ALPHA * update

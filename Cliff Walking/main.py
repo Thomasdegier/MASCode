@@ -1,6 +1,7 @@
 from CliffEnvironment import CliffEnvironment
 from QLearnerAgent import QLearnerAgent
 
+# TODO: Set to 10 later
 NR_COLUMNS = 5
 
 # Including the cliff

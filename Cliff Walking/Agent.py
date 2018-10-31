@@ -21,7 +21,7 @@ class Agent:
 
     def get_next_action(self):
         """ Returns the next index of the action according to the epsilon-greedy choice"""
-        actions = self.q_table[self.curr_state]
+        actions = self.q_table[swap_tuple(self.curr_state)]
 
         # If we choose randomly
         if np.random.random() < self.epsilon:

@@ -8,14 +8,22 @@ from Environment import Environment
 from operator import add
 
 REWARD_NONTERMINAL = -1
-REWARD_TERMINAL = 10
+
+REWARD_TREASURE = 10
+COORDINATES_TREASURE = (4, 5)
+
+COORDINATES_WALL = [(2,1), (3,1), (4,1), (5,1), (5,2), (5,3), (5,4), (1, 6), (2,6), (3,6)]
+
+COORDINATES_SNAKEPIT = (4,5)
+REWARD_SNAKEPIT = -20
+
 REWARD_CLIFF = -100
 
 # Down, right, top, left
 ACTION_DIRECTIONS = [(0, 1), (1, 0), (0, -1), (-1, 0)]
 
 
-class CliffEnvironment(Environment):
+class GridEnvironment(Environment):
     """
         Environment, where position coordinates correspond to (x, y).
         [(0,0), (1,0), (2,0), (3,0)]
