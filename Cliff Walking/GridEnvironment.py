@@ -10,26 +10,31 @@ from operator import add
 REWARD_NONTERMINAL = -1
 
 REWARD_TREASURE = 10
-COORDINATES_TREASURE = (4, 5)
+COORDINATES_TREASURE = (7, 7)
 
 COORDINATES_WALL = [(2,1), (3,1), (4,1), (5,1), (5,2), (5,3), (5,4), (1, 6), (2,6), (3,6)]
 
 COORDINATES_SNAKEPIT = (4,5)
 REWARD_SNAKEPIT = -20
 
-REWARD_CLIFF = -100
-
 # Down, right, top, left
 ACTION_DIRECTIONS = [(0, 1), (1, 0), (0, -1), (-1, 0)]
 
+def swap_tuple(input_tuple):
+    a, b = input_tuple
+    return (b,a)
 
 class GridEnvironment(Environment):
     """
         Environment, where position coordinates correspond to (x, y).
-        [(0,0), (1,0), (2,0), (3,0)]
-        [(0,1), (1,1), (2,1), (3,1)]
-        [(0,2), (1,2), (2,2), (3,2)]
-        [(0,3), (1,3), (2,3), (3,3)]
+        [(0,0), (1,0), (2,0), (3,0), (4,0), (5,0), (6,0), (7,0)]
+        [(0,1), (1,1), (2,1), (3,1), (4,1), (5,1), (6,1), (7,1)]
+        [(0,2), (1,2), (2,2), (3,2), (4,2), (5,2), (6,2), (7,2)]
+        [(0,3), (1,3), (2,3), (3,3), (4,3), (5,3), (6,3), (7,3)]
+        [(0,4), (1,4), (2,4), (3,4), (4,4), (5,4), (6,4), (7,4)]
+        [(0,5), (1,5), (2,5), (3,5), (4,5), (5,5), (6,5), (7,5)]
+        [(0,6), (1,6), (2,6), (3,6), (4,6), (5,6), (6,6), (7,6)]
+        [(0,7), (1,7), (2,7), (3,7), (4,7), (5,7), (6,7), (7,7)]
     """
     def __init__(self, nr_columns, nr_rows, nr_actions=4, init_qa_values=0):
         super().__init__(nr_columns, nr_rows)
@@ -38,8 +43,8 @@ class GridEnvironment(Environment):
     def init_world_rewards(self):
         """ Initialize rewards for reaching different states. """
         self.world[:, :] = REWARD_NONTERMINAL
-        self.world[self.nr_rows - 1:, 1:self.nr_columns - 1] = REWARD_CLIFF
-        self.world[self.nr_rows - 1, self.nr_columns - 1] = REWARD_TERMINAL
+        self.world[swap_tuple(COORDINATES_TREASURE)] = REWARD_TREASURE
+        self.world[swap_tuple(COORDINATES_SNAKEPIT)] = REWARD_SNAKEPIT
 
     def next_state(self, state, action_index):
         """ Returns next-state tuple.
