@@ -4,6 +4,9 @@ import matplotlib.pyplot as plt
 import sklearn as sk
 import seaborn as sns
 
+def swap_tuple(input_tuple):
+    a, b = input_tuple
+    return (b,a)
 
 class Agent:
     def __init__(self, env, epsilon=0.2, init_position=(0, 0)):
@@ -36,7 +39,7 @@ class Agent:
 
     def get_reward_for_state(self, state):
         """ Gets the reward for the state according to the environment."""
-        return self.env.world.transpose()[state]
+        return self.env.world[swap_tuple(state)]
 
     def terminated(self):
         """ Ask the environment whether the agent is terminated. """
