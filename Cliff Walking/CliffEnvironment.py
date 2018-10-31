@@ -17,14 +17,19 @@ class CliffEnvironment(Environment):
 
     def __init__(self, nr_columns, nr_rows, nr_actions=4, init_qa_values=0):
         super().__init__(nr_columns, nr_rows)
-        self.set_world_rewards()
+        self.init_world_rewards()
 
-    def set_world_rewards(self):
+    def init_world_rewards(self):
+        """ Initialize rewards for reaching different states. """
         self.world[:, :] = REWARD_NONTERMINAL
         self.world[self.nr_rows - 1:, 1:self.nr_columns - 1] = REWARD_CLIFF
         self.world[self.nr_rows - 1, self.nr_columns - 1] = REWARD_TERMINAL
 
     def next_state(self, state, action_index):
+        """ Returns next-state tuple.
+            If: state walks to edge, return same state. 
+            Else: add action to tuple and return new state
+        """
         action = ACTION_DIRECTIONS[action_index]
         next_state = tuple(map(add, state, action))
 
@@ -34,4 +39,5 @@ class CliffEnvironment(Environment):
         return next_state
 
     def check_termination(self, state):
+        """ Checks if state is in cliff or in terminal zone. """
         return state[1] == self.nr_rows - 1 and state[0] > 0

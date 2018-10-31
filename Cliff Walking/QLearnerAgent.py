@@ -9,12 +9,17 @@ from Agent import Agent
 ALPHA = 0.1
 GAMMA = 1
 
+def swap_tuple(input_tuple):
+    a, b = input_tuple
+    return (b,a)
+
 class QLearnerAgent(Agent):
     def __init__(self, env, nr_episodes, epsilon=0.2 , init_position=(0,0)):
         super().__init__(env, epsilon, init_position)
         self.nr_episodes = nr_episodes
         
     def run(self):
+        """ Does a run for x number of episodes. """
         for i in range(self.nr_episodes):
             self.curr_state = self.init_position
             
@@ -27,6 +32,9 @@ class QLearnerAgent(Agent):
                 self.update_state(next_state)
                 
     def update_q_table(self, action_index, next_state, next_best_action_index):
+        """ Updates the Q-table according to the Q-Learning Bellman's equation. """
         curr_q = self.q_table[self.curr_state][action_index]
         update = (self.get_reward_for_state(next_state) + GAMMA * self.q_table[next_state][next_best_action_index] - curr_q)
-        self.q_table.transpose()[self.curr_state][action_index] = curr_q + ALPHA * update
+
+        # Ensure we access the right entries
+        self.q_table[swap_tuple(self.curr_state)][action_index] = curr_q + ALPHA * update

@@ -13,9 +13,11 @@ class Environment:
         self.nr_actions = nr_actions
         
     def set_world_rewards(self):
+        """ Initialize rewards for reaching different states. """
         pass
     
     def is_out_of_bounds(self, state):
+        """ Checks if state is out of bounds of the world. """
         if state[0] < 0 or state[0] > self.nr_columns - 1:
             return True
         
@@ -25,7 +27,9 @@ class Environment:
         return False
     
     def next_state(self, state, action):
+        """ Return next-state tuple. """
         pass
     
     def check_termination(self, state):
+        """ Check termination. """
         pass
