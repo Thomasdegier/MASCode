@@ -1,3 +1,4 @@
+from GridEnvironment import GridEnvironment
 from CliffEnvironment import CliffEnvironment
 from QLearnerAgent import QLearnerAgent
 

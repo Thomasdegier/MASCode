@@ -10,6 +10,7 @@ ALPHA = 0.1
 GAMMA = 1
 
 def swap_tuple(input_tuple):
+    """Why swap: Because numpy gets row,col coordinates according to (y,x), so to use x,y, we need to swap that"""
     a, b = input_tuple
     return (b,a)
 
