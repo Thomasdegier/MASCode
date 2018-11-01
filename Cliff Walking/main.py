@@ -1,21 +1,27 @@
 from GridEnvironment import GridEnvironment
 from CliffEnvironment import CliffEnvironment
 from QLearnerAgent import QLearnerAgent
+from SAgent import SAgent
 
 ########################################################
 # Cliff World
 ########################################################
 
-# cliffWorld = CliffEnvironment(10, 4)
-# QagentC = QLearnerAgent(cliffWorld, 10000, 0.2, (0, 3))
-# QagentC.run()
+cliffWorld = CliffEnvironment(10, 4)
+QagentC = QLearnerAgent(cliffWorld, 10000, 0.2, (0, 3)) #Q Learning
+slAgentC = SAgent(cliffWorld, 10000, 0.2, (0, 3)) # SARSA
+
+# QagentC.run() for Qlearning
+
+# slAgentC.run() for SARSA
 ########################################################
 # Grid World
 ########################################################
 
 gridWorld = GridEnvironment(8, 8)
 QagentG = QLearnerAgent(gridWorld, 10000, 0.2, (0, 0))
-QagentG.run()
+slAgentG = SAgent(gridWorld, 10000, 0.2, (0,0))
 
+# QagentG.run() for Qlearning
 
-# TODO: Q-learning gaat nog niet lekker, kennelijk gebeurt er nog iets geks. 
+# slAgentCGrun() for SARSA

@@ -21,9 +21,9 @@ class Agent:
     def run(self):
         pass
 
-    def get_next_action(self):
+    def get_next_action(self, state):
         """ Returns the next index of the action according to the epsilon-greedy choice"""
-        actions = self.q_table[swap_tuple(self.curr_state)]
+        actions = self.q_table[swap_tuple(state)]
         random_actions = np.ones(len(actions), dtype=float) * self.epsilon / len(actions)
         best_action_index = np.argmax(actions)
         random_actions[best_action_index] += (1 - self.epsilon)
