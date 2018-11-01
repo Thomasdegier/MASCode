@@ -1,6 +1,7 @@
 from GridEnvironment import GridEnvironment
 from CliffEnvironment import CliffEnvironment
 from QLearnerAgent import QLearnerAgent
+from plotter import GridPlotter
 
 ########################################################
 # Gridworld
@@ -15,5 +16,10 @@ agentC = QLearnerAgent(cliffWorld, 100, 0.2, (0, 3))
 
 gridWorld = GridEnvironment(8, 8)
 agentG = QLearnerAgent(gridWorld, 100, 0.2, (0, 0))
-gridWorld.world
-print("Dog")
+
+
+
+grid = gridWorld.world
+
+GridPlotter().plotHeatmap(grid)
+GridPlotter().plotHeatmap(cliffWorld.world)
