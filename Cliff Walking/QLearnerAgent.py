@@ -22,19 +22,24 @@ class QLearnerAgent(Agent):
     def run(self):
         """ Does a run for x number of episodes. """
         for i in range(self.nr_episodes):
+            # Start at the initial-position
             self.curr_state = self.init_position
             
             while not self.terminated():
+                curr_state = self.curr_state
                 action_index = self.get_next_action()
                 next_state = self.get_next_state(action_index)
                 next_state_best_action_index = np.argmax(self.q_table[swap_tuple(next_state)])
 
                 self.update_q_table(action_index, next_state, next_state_best_action_index)
                 self.update_state(next_state)
-                
+
+        self.print_q_max()  
+
     def update_q_table(self, action_index, next_state, next_best_action_index):
         """ Updates the Q-table according to the Q-Learning Bellman's equation. """
         curr_q = self.q_table[swap_tuple(self.curr_state)][action_index]
-        update = (self.get_reward_for_state(next_state) + GAMMA * self.q_table[swap_tuple(next_state)][next_best_action_index] - curr_q)
+        td_target = self.get_reward_for_state(next_state) + (GAMMA * self.q_table[swap_tuple(next_state)][next_best_action_index])
+        td_delta = td_target - curr_q
 
-        self.q_table[swap_tuple(self.curr_state)][action_index] = curr_q + ALPHA * update
+        self.q_table[swap_tuple(self.curr_state)][action_index] += ALPHA * td_delta

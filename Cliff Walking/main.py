@@ -3,17 +3,19 @@ from CliffEnvironment import CliffEnvironment
 from QLearnerAgent import QLearnerAgent
 
 ########################################################
-# Gridworld
+# Cliff World
 ########################################################
 
 cliffWorld = CliffEnvironment(10, 4)
-agentC = QLearnerAgent(cliffWorld, 100, 0.2, (0, 3))
-
+QagentC = QLearnerAgent(cliffWorld, 10000, 0.2, (0, 3))
+QagentC.run()
 ########################################################
-# ClifWorld
+# Grid World
 ########################################################
 
-gridWorld = GridEnvironment(8, 8)
-agentG = QLearnerAgent(gridWorld, 100, 0.2, (0, 0))
-gridWorld.world
-print("Dog")
+# gridWorld = GridEnvironment(8, 8)
+# QagentG = QLearnerAgent(gridWorld, 100, 0.2, (0, 0))
+# QagentG.run()
+
+
+# TODO: Q-learning gaat nog niet lekker, kennelijk gebeurt er nog iets geks. 
