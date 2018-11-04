@@ -36,7 +36,8 @@ class GridPlotter():
 
             q_values = flatter[i]
 
-            text = "u:{}\nr:{}\nd:{}\nl{}".format(q_values[0], q_values[1], q_values[2], q_values[3])
+            # QValues order: D, R, U, L
+            text = "u:{}\nr:{}\nd:{}\nl{}".format(round(q_values[2], 1), round(q_values[1], 1), round(q_values[0], 1), round(q_values[3], 1))
 
             elem.set_text(text)
 
