@@ -16,6 +16,10 @@ class Environment:
         self.nr_columns = nr_columns
         self.nr_rows = nr_rows
         self.nr_actions = nr_actions
+
+    def spawn_in_environment(self):
+        """Returns where user spawns after end of episode. """
+        pass
         
     def set_world_rewards(self):
         """ Initialize rewards for reaching different states. """

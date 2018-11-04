@@ -11,9 +11,8 @@ def swap_tuple(input_tuple):
     return (b,a)
 
 class Agent:
-    def __init__(self, env, epsilon=0.2, init_position=(0, 0)):
-        self.init_position = init_position
-        self.curr_state = init_position
+    def __init__(self, env, epsilon=0.2):
+        self.curr_state = (0, 0)
         self.env = env
         self.epsilon = epsilon
         self.q_table = np.zeros((env.nr_rows, env.nr_columns, env.nr_actions))

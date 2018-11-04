@@ -49,3 +49,7 @@ class CliffEnvironment(Environment):
     def check_termination(self, state):
         """ Checks if state is in cliff or in terminal zone. """
         return state[1] == self.nr_rows - 1 and state[0] > 0
+
+    def spawn_in_environment(self):
+        """Returns where user spawns after end of episode. In cliff-walking, always same corner. """
+        return (0, 3)

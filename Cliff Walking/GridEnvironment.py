@@ -70,3 +70,12 @@ class GridEnvironment(Environment):
     def check_termination(self, state):
         """ Checks if state is in cliff or in terminal zone. """
         return state == COORDINATES_SNAKEPIT or state == COORDINATES_TREASURE
+
+    def spawn_in_environment(self):
+        """Returns where user spawns after end of episode. In gridworld, spawn anywhere where there is no termination node."""
+        while True:
+            x = np.random.randint(self.nr_columns)
+            y = np.random.randint(self.nr_rows)
+
+            if (x, y) not in COORDINATES_WALL and (x,y) not in COORDINATES_SNAKEPIT and (x,y) not in COORDINATES_TREASURE:
+                return (x,y)
